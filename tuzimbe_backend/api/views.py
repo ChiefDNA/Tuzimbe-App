@@ -39,9 +39,9 @@ class LoginView(APIView):
 class UserListView(APIView):
     def get(self, request):
         jobtitle = request.data.get('jobtitle')
-        if jobtitle is 'Tracker':
+        if jobtitle == 'Tracker':
             employees = Tuzimbe.objects.exclude(jobtitle__in=['Manager','Tracker']).values('id','firstname','sirname','tellNo','email','jobtitle')
-        elif jobtitle is 'Manager':
+        elif jobtitle == 'Manager':
             employees = Tuzimbe.objects.exclude(jobtitle='Manager').values('id','firstname','sirname','username','tellNo','email','jobtitle','address','approved')
         else :
             employees = {}
@@ -51,7 +51,7 @@ class UserListView(APIView):
 class MaterialsView(APIView):
     def get(self, request):
         jobtitle = request.data.get('jobtitle')
-        if jobtitle is 'Tracker' or 'Manager':
+        if jobtitle == 'Tracker' or 'Manager':
             materials = Materials.objects.all()
         else :
             materials = {}
@@ -78,7 +78,7 @@ class AttendenceView(APIView):
     def post(self, request, titles):
         path  = titles
         Users = request.data.get()
-        if path is 'All':
+        if path == 'All':
             attendences = AttendenceSerializer(data=Users,many=True,partial=True)
             if attendences.is_valid():
                 with transaction.atomic():
@@ -86,7 +86,7 @@ class AttendenceView(APIView):
                         Attendence.objects.filter(date=update['date'],dayid=update['dayid']).update(**update)
                 return Response({'message':'Multi user attendences recorded'},status=status.HTTP_201_CREATED)
             return Response({'message':attendences.error}, status=status.HTTP_304_NOT_MODIFIED)
-        if path is Users.tellNo:
+        if path == Users.tellNo:
             Attendence.objects.filter(date=Users.date,dayid=Users.dayid).update(**Users)
             return Response({'message':'Records Updated'},status=status.HTTP_201_CREATED)
         return Response({'message':'record not found'},status=status.HTTP_206_PARTIAL_CONTENT)
@@ -96,7 +96,7 @@ class AttendenceView(APIView):
         today = date.today().strftime('%Y%m%d')
         records = Attendence.objects.filter(dayid__startswith=today)
         if records.exists():
-            if path is 'Tracker':
+            if path == 'Tracker':
                 records = records.exclude(jobtitle='Manager')
             return Response(records,status=status.HTTP_302_FOUND)
         users = Tuzimbe.objects.all().values('id','tellNo','jobtitle')
@@ -104,9 +104,9 @@ class AttendenceView(APIView):
             dayid = f"{today}U{user.id}"
             Attendence.objects.create(dayid=dayid,tellNo=user.tellNo,jobtitle=user.jobtitle)
         newRecords = Attendence.objects.filter(dayid__startswith=today)
-        if path is 'Tracker':
+        if path == 'Tracker':
             newRecords = newRecords.exclude(jobtitle='Manager')
-        elif path is not 'Manager':
+        elif path != 'Manager':
             newRecords={}
             return Response({'message':'Unathorized access'},status=status.HTTP_401_UNAUTHORIZED)
         return Response(newRecords,status=status.HTTP_100_CONTINUE)
@@ -115,10 +115,10 @@ class MaterialPastView(APIView):
     def post(self, request, title):
         jobtitle = title
         today = date.today().strftime('%Y-%m-%d')
-        if jobtitle is 'Manager':
+        if jobtitle == 'Manager':
             materials = MaterialsHistory.objects.all()
             return Response(materials,status=status.HTTP_200_OK)
-        if jobtitle is 'Tracker':
+        if jobtitle == 'Tracker':
             materials = MaterialsHistory.objects.filter(date=today)
             return Response(materials,status=status.HTTP_200_OK)
         return Response({'message':'Not cleared t view this Information'},status=status.HTTP_401_UNAUTHORIZED)

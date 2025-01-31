@@ -29,6 +29,7 @@ class Tuzimbe(AbstractUser):
     class Meta:
         app_label = 'api'
 
+
 class Materials(models.Model):
     class material_list(models.TextChoices):
         SAND = 'Sand'
@@ -60,7 +61,7 @@ class MaterialsHistory(models.Model):
     material = models.ForeignKey(Materials,choices=material_list.choices,on_delete=models.CASCADE)
     bought = models.IntegerField()
     left = models.IntegerField()
-    datetime = models.DateField(default=date.now().strftime('%Y-%m-%d %H:%M')) #datetime.now().strftime('%Y-%m-%d %H:%M)
+    datetime = models.DateField(default=datetime.now().strftime('%Y-%m-%d %H:%M')) #datetime.now().strftime('%Y-%m-%d %H:%M)
     cost = models.DecimalField(max_digits=10,decimal_places=2)
     used = models.IntegerField()
 
@@ -70,11 +71,11 @@ class MaterialsHistory(models.Model):
 class Attendence(models.Model):
     date = models.DateField(default=date.today().strftime('%Y-%m-%d'))
     dayid = models.CharField(max_length=25,unique=True)
-    tellNo = models.ForeignKey(Tuzimbe,on_delete=models.CASCADE)
+    tellNo = models.ForeignKey(Tuzimbe,on_delete=models.CASCADE,related_name='attended_tell_no')
     arrival = models.TimeField()
     depature = models.TimeField()
     jobtitle = models.CharField(max_length=10)
-    recorder = models.ForeignKey(Tuzimbe,on_delete=models.CASCADE)
+    recorder = models.ForeignKey(Tuzimbe,on_delete=models.CASCADE,related_name='recorded_attendences')
 
     def __str__(self):
         return f'{self.tellNo} - {self.date}'
