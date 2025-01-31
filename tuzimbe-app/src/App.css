@@ -1,0 +1,123 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+/* Nav bar side bar css */
+body{
+  display: grid;
+}
+header {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  z-index: 100;
+  max-width: 200px;
+  min-width: 20px;
+  max-height: 700px;
+  background-color: rgba(220, 220, 220, 0.342);
+  padding: 20px;
+  box-sizing: border-box;
+  justify-content: center;
+  color: white;
+  display: block;
+}
+.sidebar {
+  max-width: 200px;
+  overflow: display;
+  display: none;
+}
+.sidebar.onfocus {
+  display: block;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar li{
+  margin-bottom: 10px;
+  margin-left: 7px;
+}
+.sidebar li::before {
+  width: 20px;
+  height: 20px;
+}
+.sidebar li.idhom::before {
+  content: url('./images/home2.png'); /*side bar icons */
+}
+.sidebar li.idlin::before {
+  content: url('./images/home.png'); /*side bar icons */
+}
+.sidebar li.idreg::before {
+  content: url('./images/attendece.png'); /*side bar icons */
+}
+.sidebar li.idnew::before {
+  content: url('./images/materials.png'); /*side bar icons */
+}
+.sidebar li.idadm::before {
+  content: url('./images/data.png'); /*side bar icons */
+}
+.sidebar li.idatt::before {
+  content: url('./images/attendece.png'); /*side bar icons */
+}
+.sidebar li.idhis::before {
+  content: url('./images/administrator.png'); /*side bar icons */
+}
+.sidebar li.idmat::before {
+  content: url('./images/history.png'); /*side bar icons */
+}
+.sidebar li.idout::before {
+  content: url('./images/logout.png'); /*side bar icons */
+}
+.sidebar li.idemp::before {
+  content: url('./images/data.png'); /*side bar icons */
+}
+.sidebar a {
+  text-decoration: none;
+  background-color: rgba(0, 255, 255, 0.541);
+  color: black;
+}
+.sidebar a:hover {
+  color: beige;
+  background-color: rgba(0, 255, 255, 0.89);
+}
+
+/* Sections */
+section#landPage {
+  width: 100%;
+  height: 100vh;
+  background: url("./images/vecteezy_ai-generated-construction-of-a-new-residential-house_35816488.jpg") top center;
+  background-size: cover;
+  position: relative;
+  padding: 0;
+}
+section#admin {idth: 100%;
+  height: 100vh;
+  background: url("./images/vecteezy_ai-generated-construction-of-a-new-residential-house_35816488.jpg") top center;
+  background-size: cover;
+  position: relative;
+  padding: 0;
+
+}
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
