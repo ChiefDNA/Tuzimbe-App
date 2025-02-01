@@ -19,21 +19,23 @@ class RegisterView(APIView):
     
 class LoginView(APIView):
     def post(self, request):
-        usernamed = request.data.get('username')
-        passworded = request.data.get('password')
-        user = authenticate(username=usernamed, password=passworded)
+        logdata = request.data
+        passworded = logdata['password']
+        if logdata['choice'] == 'username':
+            choice = logdata['username']
+            user = authenticate(username=choice, password=passworded)
+        if logdata['choice'] == 'tellNo':
+            choice = logdata['tellNo']
+            user = authenticate(tellNo=choice, password=passworded)
         if user is not None:
             login(request, user)  # Log in the user and create a session
-            Users = Tuzimbe.objects.filter(username=usernamed)
+            if logdata['choice'] == 'username':
+                Users = Tuzimbe.objects.filter(username=choice).values('id','username','tellNo','email','jobtitle')
+            if logdata['choice'] == 'tellNo':
+                Users = Tuzimbe.objects.filter(tellNo=choice).values('id','username','tellNo','email','jobtitle')
             return Response({
                 'message': 'Logged in successfully',
-                'user': {
-                    'id': Users.id,
-                    'username': Users.username,
-                    'tellNo': Users.tellNo,
-                    'jobtitle': Users.jobtitle
-                }
-            }, status=status.HTTP_200_OK)
+                'user': Users }, status=status.HTTP_200_OK)
         return Response({'message': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class UserListView(APIView):
@@ -61,13 +63,13 @@ class MaterialsView(APIView):
     
     def post(self,request):
         materials = request.data
-        if materials.used==None or materials.bought==None:
+        if materials['used']==None or materials['bought']==None:
             return Response({'message':'fill in atleast the new or used quantities'}, status=status.HTTP_304_NOT_MODIFIED)
-        if materials.used is not None:
-            quantities = Materials.objects.filter(material=materials.material)
-            quantities.datetime = datetime.now().strptime('%Y-%m-%d %H:%M')
-            quantities.quantity = quantities.quantiity - materials.used + materials.bought
-            serializer = MaterialsSerializer(quantities,data=quantities.quantity,partial=True)
+        if materials['used'] is not None:
+            quantities = Materials.objects.filter(material=materials['material'])
+            quantities['datetime'] = datetime.now().strptime('%Y-%m-%d %H:%M')
+            quantities['quantity'] = quantities['quantiity'] - materials['used'] + materials['bought']
+            serializer = MaterialsSerializer(quantities,data=quantities['quantity'],partial=True)
             if serializer.is_valid():
                 serializer.save()
         histories = MaterialsHistorySerializer(materials)
@@ -77,7 +79,7 @@ class MaterialsView(APIView):
 class AttendenceView(APIView):
     def post(self, request, titles):
         path  = titles
-        Users = request.data.get()
+        Users = request.data
         if path == 'All':
             attendences = AttendenceSerializer(data=Users,many=True,partial=True)
             if attendences.is_valid():
@@ -86,8 +88,8 @@ class AttendenceView(APIView):
                         Attendence.objects.filter(date=update['date'],dayid=update['dayid']).update(**update)
                 return Response({'message':'Multi user attendences recorded'},status=status.HTTP_201_CREATED)
             return Response({'message':attendences.error}, status=status.HTTP_304_NOT_MODIFIED)
-        if path == Users.tellNo:
-            Attendence.objects.filter(date=Users.date,dayid=Users.dayid).update(**Users)
+        if path == Users['tellNo']:
+            Attendence.objects.filter(date=Users['date'],dayid=Users['dayid']).update(**Users)
             return Response({'message':'Records Updated'},status=status.HTTP_201_CREATED)
         return Response({'message':'record not found'},status=status.HTTP_206_PARTIAL_CONTENT)
     
@@ -101,8 +103,8 @@ class AttendenceView(APIView):
             return Response(records,status=status.HTTP_302_FOUND)
         users = Tuzimbe.objects.all().values('id','tellNo','jobtitle')
         for user in users:
-            dayid = f"{today}U{user.id}"
-            Attendence.objects.create(dayid=dayid,tellNo=user.tellNo,jobtitle=user.jobtitle)
+            dayid = f"{today}U{user['id']}"
+            Attendence.objects.create(dayid=dayid,tellNo=user['tellNo'],jobtitle=user['jobtitle'])
         newRecords = Attendence.objects.filter(dayid__startswith=today)
         if path == 'Tracker':
             newRecords = newRecords.exclude(jobtitle='Manager')
@@ -125,19 +127,19 @@ class MaterialPastView(APIView):
     
 class HistoriesView(APIView):
     def post(self, request):
-        tellNo = request.data.get().tellNo
+        tellNo = request.data.get('tellNo')
         user = Tuzimbe.objects.filter(tellNo=tellNo).values('firstname','sirname','tellNo','email','jobtitle','address')
         if user is not None:
             return Response(user,status=status.HTTP_202_ACCEPTED)
         return Response({'message':"Make sure you Registered your Number"},status=status.HTTP_204_NO_CONTENT)
     
     def get(self, request):
-        tellNo = request.data.get().tellNo
+        tellNo = request.data.get('tellNo')
         data = Attendence.objects.filter(tellNo=tellNo).values('date','arrival','depature','recorder')
         return Response(data, status=status.HTTP_302_FOUND)
 
 class LogoutView(APIView):
     def post(self, request):
-        logout(request,Tuzimbe.objects.filter(username=request.data.username))
+        logout(request,Tuzimbe.objects.filter(username=request.data['username']))
         return Response({'message':'logged out'},status=status.HTTP_423_LOCKED)
            

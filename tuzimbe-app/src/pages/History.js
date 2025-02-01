@@ -43,7 +43,7 @@ function History({ data }) {
 
     return (
         <>
-            <div id="section1">
+            <section id="section1">
                 {(activeUser?.username === userInformation.username || data?.jobtitle === 'Manager') ? (
                     <ul>
                         <span>{userInformation.firstname} {userInformation.sirname}</span>
@@ -55,9 +55,9 @@ function History({ data }) {
                 ) : (
                     <p>........UNAUTHORIZED.......</p>
                 )}
-            </div>
+            </section>
 
-            <div id="section2">
+            <section id="section2">
                 {activeUser?.jobtitle === 'Manager' && (
                     <input
                         value={numb}
@@ -85,7 +85,7 @@ function History({ data }) {
                         ))}
                     </tbody>
                 </table>
-            </div>
+            </section>
         </>
     );
 }

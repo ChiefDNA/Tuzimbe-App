@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect }from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -14,6 +14,16 @@ import Logout from './pages/Logout';
 import Administrator from './pages/Administrator';
 
 function App() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "/PureJava.js"; // Ensure the script is in the `public/` folder
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+        document.body.removeChild(script); // Cleanup script on unmount
+    };
+}, []);
 
   return (
     <Router>

@@ -27,7 +27,7 @@ const Employees = ({ data }) => {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div>
+        <section id="employ">
             <h1>Employee List</h1>
             <button onClick={() => window.location.reload()} style={{ marginLeft: 10 }}>
                 Refresh
@@ -50,7 +50,7 @@ const Employees = ({ data }) => {
                     ))}
                 </tbody>
             </table>
-        </div>
+        </section>
     );
 };
 

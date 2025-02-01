@@ -15,77 +15,58 @@
 /* Nav bar side bar css */
 body{
   display: grid;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 header {
   position: fixed;
   top: 20px;
   left: 0;
   z-index: 100;
-  max-width: 200px;
-  min-width: 20px;
-  max-height: 700px;
+  width: 100%;
+  height: 50px;
   background-color: rgba(220, 220, 220, 0.342);
-  padding: 20px;
+  padding: 0;
   box-sizing: border-box;
   justify-content: center;
   color: white;
   display: block;
 }
 .sidebar {
-  max-width: 200px;
-  overflow: display;
-  display: none;
-}
-.sidebar.onfocus {
-  display: block;
+  padding-top: 0px;
+  width: 100%;
+  height: 50px;
+  overflow:visible;
 }
 .sidebar ul {
+  padding-top: 5px;
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 .sidebar li{
-  margin-bottom: 10px;
+  margin-bottom: 0;
   margin-left: 7px;
+  display: inline-block;
 }
-.sidebar li::before {
-  width: 20px;
-  height: 20px;
-}
-.sidebar li.idhom::before {
-  content: url('./images/home2.png'); /*side bar icons */
-}
-.sidebar li.idlin::before {
-  content: url('./images/home.png'); /*side bar icons */
-}
-.sidebar li.idreg::before {
-  content: url('./images/attendece.png'); /*side bar icons */
-}
-.sidebar li.idnew::before {
-  content: url('./images/materials.png'); /*side bar icons */
-}
-.sidebar li.idadm::before {
-  content: url('./images/data.png'); /*side bar icons */
-}
-.sidebar li.idatt::before {
-  content: url('./images/attendece.png'); /*side bar icons */
-}
-.sidebar li.idhis::before {
-  content: url('./images/administrator.png'); /*side bar icons */
-}
-.sidebar li.idmat::before {
-  content: url('./images/history.png'); /*side bar icons */
-}
-.sidebar li.idout::before {
-  content: url('./images/logout.png'); /*side bar icons */
-}
-.sidebar li.idemp::before {
-  content: url('./images/data.png'); /*side bar icons */
+.sidebar li img {
+  padding-top: 5px;
+  width: 30px;
+  height: 30px;
+  transform: translate(-5px,8px);
+  display: inline;
 }
 .sidebar a {
   text-decoration: none;
-  background-color: rgba(0, 255, 255, 0.541);
+  background-color: rgba(0, 255, 255, 0.199);
   color: black;
+  
 }
 .sidebar a:hover {
   color: beige;
@@ -93,26 +74,145 @@ header {
 }
 
 /* Sections */
+section > * {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 section#landPage {
+  width: 100%;
+  height: 100vh;
+  background: url("./images/vecteezy_ai-generated-construction-of-a-new-residential-house_35816488.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+  padding: 0;
+}
+section#admin::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.126);
+  position: absolute;
+}
+section#admin {
   width: 100%;
   height: 100vh;
   background: url("./images/vecteezy_ai-generated-construction-of-a-new-residential-house_35816488.jpg") top center;
   background-size: cover;
+  background-attachment: fixed;
   position: relative;
   padding: 0;
+
 }
-section#admin {idth: 100%;
+main #materials #material {
+width: 100%;
+height: 100vh;
+background: rgba(0, 0, 0, 0.24),url("./images/vecteezy_landscape-of-house-under-construction-site-with_2233901.jpg") top fixed;
+}
+#attend::before, #material::before {
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.438);
+  position: absolute;
+}
+#attend {
+  width: 100vh;
   height: 100vh;
-  background: url("./images/vecteezy_ai-generated-construction-of-a-new-residential-house_35816488.jpg") top center;
-  background-size: cover;
+  background: url("./images/Screenshot 4.png");
+  background-position: top center;
+  background-repeat: repeat;
+  background-size: contain;
   position: relative;
-  padding: 0;
-
+  background-attachment:scroll;
 }
-.App-link {
-  color: #61dafb;
+#employ {
+  width: 100%;
+  height: 100vh;
+  background: url("./images/vecteezy_network-community-teamwork-and-social-network-concept_6694144.jpg") top center;
+  background-attachment: fixed;
+  position: relative;
+}
+#employ::before {
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.671);
+  position: absolute;
+}
+#section1 {
+  width: 100vh;
+  height: 60%;
+  max-height: 400px;
+  overflow-y: scroll;
+  background-image: url("./images/Screenshot 4.png");
+  background-position: top center;
+  background-repeat: repeat;
+  background-size: contain;
+  position: relative;
+  background-attachment:scroll;
+}
+#section2 {
+  width: 100%;
+  height: 40%;
+  max-height: 400px;
+  background-image: url("./images/vecteezy_hr-recruitment-business-concept_6899445.jpg") top center;
+  background-attachment: fixed;
+  position: relative;
+}
+#section1::before,#record::before, #registry::before, #section2::before, #login::before {
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.61);
+  position: absolute;
+}
+section > :first-child { /*div > :first-child {*/
+  padding-top: 57px;
+  padding-left: 30px;
+}  
+section::before {
+  pointer-events: none;
+}
+form {
+  overflow-y: scroll;
+  height: 80vh;
+  width: 400px;
+  padding-top:100px;
+  color: rgb(235, 106, 32);
+  background-color: rgba(255, 204, 127, 0.775);
+  place-self: center;
+}
+#login, #registry, #record {
+  width: 100%;
+  height: 100%;
+  background-image: url("./images/Screenshot 4.png");
+  background-position: top center;
+  background-repeat: repeat;
+  background-size: contain;
+  position: relative;
+  background-attachment:scroll;
 }
 
+#login h, #registry h, #record h{
+color: cornflowerblue;
+scale: 2;
+padding-bottom: 17px;
+}
+#material {
+  width: 100%;
+  height: 100%;
+  background: url("./images/vecteezy_framing-interior-of-brand-new-home_13959483.jpg") top center;
+  background-attachment: fixed;
+  position: relative;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -36,7 +36,7 @@ const Register = () => {
     };
 
     return (
-        <div>
+        <section id="registry">
             <h3>Register</h3>
             <form onSubmit={handleSubmit}>
                 <label>FisrtName:</label>
@@ -73,7 +73,7 @@ const Register = () => {
                 <br />
                 <button type="submit">Register</button>
             </form>
-        </div>
+        </section>
     );
 };
 export default Register;

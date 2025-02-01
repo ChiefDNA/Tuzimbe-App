@@ -31,7 +31,7 @@ const NewRecords= ()=>{
     };
 
     return (
-        <div>
+        <section id="record">
             <form onSubmit={handleSubmit}>
                 <label>MaterialMaterial:</label>
                 <select value={material} onChange={(event)=>setMaterial(event.target.value)} >
@@ -88,7 +88,7 @@ const NewRecords= ()=>{
                 <br />
                 <button type="submit">Register</button>
             </form>
-        </div>
+        </section>
     )
 }
 export default NewRecords;

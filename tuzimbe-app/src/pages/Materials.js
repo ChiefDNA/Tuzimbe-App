@@ -47,7 +47,7 @@ const Materials = ({ data }) => {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div>
+        <section id="material">
             {Status === 'Manager' && (
                 <>
                     <h1>Materials In Storage</h1>
@@ -97,7 +97,7 @@ const Materials = ({ data }) => {
                     ))}
                 </tbody>
             </table>
-        </div>
+        </section>
     );
 };
 
