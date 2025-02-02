@@ -1,6 +1,10 @@
 Tuzimbe-app is a construction site app for people to keep track of workers and building material at their construction sites.
 This app is build with react at the frontend and Django at the backend
 To run this app locally, installations of node.js and python should pe present and in the  path environment.
+A revised code for the Front End which is runinig a git-page is at 
+
+	https://github.com/ChiefDNA/tuzimbe-React
+
 When these requirements are present, 
 Download the repository to a local folder,
 	Open commandPrompt and navigate to the root folder of Tuzimbe-App by code
